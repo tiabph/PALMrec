@@ -1,0 +1,4 @@
+TODO: 
+add progress indicator
+add drift correction with beads
+add auto drift correction
