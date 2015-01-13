@@ -1,5 +1,11 @@
 function databuf = palmRec_DriftCorrection(databuf, param)
     type = param.drift.type;
+    B=[];
+    if isempty(param.drift.file)
+        databuf.DriftCorrectionFlag = 0;
+        return
+    end
+    
     if strcmp(type,'file')
         path = param.drift.path;
         file = param.drift.file;
@@ -22,6 +28,17 @@ function databuf = palmRec_DriftCorrection(databuf, param)
         B(:,1) = B(:,1) - B(1,1);
         B(:,2) = B(:,2) - B(1,2);
         databuf.driftInfo = B;
+    end
+    
+    if( ~isempty(B))%start correction
+        databuf.fitInfo_raw = databuf.fitInfo;
+        framelist = databuf.fitInfo(:,9);
+        x_corr = B(framelist,1);
+        y_corr = B(framelist,2);
+        databuf.fitInfo(:,1) = databuf.fitInfo(:,1) - x_corr;
+        databuf.fitInfo(:,2) = databuf.fitInfo(:,2) - y_corr;
+        
+        databuf.DriftCorrectionFlag = 1;
     end
 end
 
