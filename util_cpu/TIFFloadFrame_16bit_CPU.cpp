@@ -1,6 +1,6 @@
 #include "mex.h"
 #include "matrix.h"
-#include ".\include\tiffio.h"
+#include ".\tifflib\include\tiffio.h"
 #include "windows.h"
 /* imported function list:
  TIFFOpen
