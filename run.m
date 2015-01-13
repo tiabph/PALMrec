@@ -4,6 +4,7 @@ addpath('.\detection');
 addpath('.\PALM');
 addpath('.\common');
 addpath('.\util_cpu');
+addpath('.\drift');
 %init parameters
 filepath = '.\test\';
 filename = 'a647_big.tif';
@@ -64,7 +65,7 @@ param.drift.type = 'file';
 param.drift.path = param.filepath;
 param.drift.file = 'a647_big_beads.tif';
 
-databuf = palmRec_DriftCorrection(databuf, param)
+databuf = palmRec_DriftCorrection(databuf, param);
 
 disp(['--drift correction time: ' num2str(toc)])
 timeResult.drift = toc();
