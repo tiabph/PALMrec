@@ -8,6 +8,7 @@ addpath('.\drift');
 %init parameters
 filepath = '.\test\';
 filename = 'a647_big.tif';
+beadsfile = '';
 filename_out = 'a647_big_rec.tif';
 outpath = '.\test\';
 
@@ -63,7 +64,7 @@ timeResult.postfit = toc();
 tic
 param.drift.type = 'file';
 param.drift.path = param.filepath;
-param.drift.file = 'a647_big_beads.tif';
+param.drift.file = beadsfile;
 
 databuf = palmRec_DriftCorrection(databuf, param);
 
