@@ -8,7 +8,7 @@ addpath('.\drift');
 %init parameters
 filepath = '.\test\';
 filename = 'a647_big.tif';
-beadsfile = '';
+beadsfile = 'a647_big_beads.tif';
 filename_out = 'a647_big_rec.tif';
 outpath = '.\test\';
 
@@ -62,9 +62,17 @@ timeResult.postfit = toc();
 
 %% drift correction
 tic
-param.drift.type = 'file';
-param.drift.path = param.filepath;
-param.drift.file = beadsfile;
+%drift use file
+% param.drift.type = 'file';
+% param.drift.path = param.filepath;
+% param.drift.file = beadsfile;
+
+%drift use auto
+param.drift.type = 'auto';
+param.drift.gap = 50;
+param.drift.dist = 0.5;
+
+% param.drift.type = 'none';
 
 databuf = palmRec_DriftCorrection(databuf, param);
 
