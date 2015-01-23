@@ -6,7 +6,7 @@ typedef long int32;
 //[result startpoints] = LinkPoints(fitData, [xidx yidx frameidx], [imgheight imgwidth imglen], [gap, dist])
 void LinkPoints(double *px, double *py, double *pframe, 
 				size_t pnum, double gap, double dist, 
-				size_t imgWidth, size_t img_Height,
+				size_t imgWidth, size_t imgHeight,
 				int32 *presult);
 int ListStartPoints(int32 *pLinkData, size_t pnum, int32 *presult);
 
@@ -66,7 +66,7 @@ void mexFunction(
 
 void LinkPoints(double *px, double *py, double *pframe, 
 				size_t pnum, double gap, double dist, 
-				size_t imgWidth, size_t img_Height,
+				size_t imgWidth, size_t imgHeight,
 				int32 *presult){
 	double *pBuf_x, *pBuf_y, *pBuf_frame;
 	int32 *pBuf_index;
@@ -77,15 +77,17 @@ void LinkPoints(double *px, double *py, double *pframe,
 	double tf, tdist;
 	dist = dist*dist;
 	//alloc memory
-	m = (imgWidth+2)*(img_Height+2);
+	imgWidth +=2;
+	imgHeight +=2;
+	m = (imgWidth+2)*(imgHeight+2);
 	pBuf_x = (double *)mxMalloc(m*sizeof(double));
 	pBuf_y = (double *)mxMalloc(m*sizeof(double));
 	pBuf_frame = (double *)mxMalloc(m*sizeof(double));
 	pBuf_index = (int32 *)mxMalloc(m*sizeof(int32));
 	
 	//init buffers
-	for(m=0;m<img_Height; m++){
-		for(n=0;n<imgWidth; n++){
+	for(m=0;m<imgHeight+2; m++){
+		for(n=0;n<imgWidth+2; n++){
 			pBuf_index[n + m*imgWidth] = -1;
 		}
 	}
@@ -97,17 +99,18 @@ void LinkPoints(double *px, double *py, double *pframe,
 		tx = size_t(px[m]+0.5);
 		ty = size_t(py[m]+0.5);
 		tf = pframe[m];
+		
 		findflag = 0;
 		for(n=0;n<searchwidth; n++){
-			cx = size_t(tx) + dx[n];
-			cy = size_t(ty) + dy[n];
+			cx = tx + dx[n];
+			cy = ty + dy[n];
 			base = cx + cy*imgWidth;
-			if(cx>=0 && cy>=0 && cx<imgWidth && cy<img_Height && pBuf_index[base]>=0){
+			if(cx>=0 && cy>=0 && cx<imgWidth && cy<imgHeight && pBuf_index[base]>=0){
 				tdist = (px[m] - pBuf_x[base])*(px[m] - pBuf_x[base]) 
 						+ (py[m] - pBuf_y[base])*(py[m] - pBuf_y[base]);
 				if(tdist < dist && abs(tf - pBuf_frame[base])<= gap && abs(tf - pBuf_frame[base])>0.5){
 					findflag =1;
-					preidx = pBuf_index[base]+1;
+					preidx = pBuf_index[base];
 					pBuf_index[base] = -1;
 					break;
 				}
@@ -117,7 +120,7 @@ void LinkPoints(double *px, double *py, double *pframe,
 			presult[preidx] = m;
 		}
 		//reg point
-		if(tx>=0 && ty>=0 && tx<imgWidth && ty<=img_Height){
+		if(tx>=0 && ty>=0 && tx<imgWidth && ty<=imgHeight){
 			base = tx + ty*imgWidth;
 			pBuf_x[base] = px[m];
 			pBuf_y[base] = py[m];
@@ -141,12 +144,12 @@ int ListStartPoints(int32 *pLinkData, size_t pnum, int32 *presult){
 	}
 	for(m=0;m<pnum;m++){
 		if(pFlagBuf[m]==0){
-			presult[cnt] = m+1;
+			presult[cnt] = m;
 			n=m;
 			deep = 0;
 			while(n>=0 && n<pnum){
 				pFlagBuf[n] = 1;
-				n = pLinkData[n]-1;
+				n = pLinkData[n];
 				deep++;
 			}
 			presult[cnt + pnum] = deep;

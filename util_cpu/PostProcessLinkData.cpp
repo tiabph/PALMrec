@@ -37,18 +37,18 @@ void mexFunction(
 		for(n=0;n<fitdataSize; n++){
 			tbuf[n]=0.0;
 		}
-		p = pSPData[m]-1;
+		p = pSPData[m];
 		while(p>=0){
 			for(n=0;n<fitdataSize; n++){
 				tbuf[n] += pFitData[p+n*fitnum];
 			}
-			p=pLinkData[p]-1;
+			p=pLinkData[p];
 		}
 		for(n=0;n<fitdataSize; n++){
 			tbuf[n] = tbuf[n] / pSPData[m + renum];//mean of raw data
 		}
 		tbuf[6] *= pSPData[m + renum];//sum of photon number
-		tbuf[8] = pFitData[pSPData[m]-1 + 8*fitnum]; //first frame
+		tbuf[8] = pFitData[pSPData[m] + 8*fitnum]; //first frame
 		
 		//copy data
 		for(n=0;n<fitdataSize; n++){
