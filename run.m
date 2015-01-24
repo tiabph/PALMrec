@@ -63,14 +63,14 @@ timeResult.postfit = toc();
 %% drift correction
 tic
 %drift use file
-% param.drift.type = 'file';
-% param.drift.path = param.filepath;
-% param.drift.file = beadsfile;
+param.drift.type = 'file';
+param.drift.path = param.filepath;
+param.drift.file = beadsfile;
 
 %drift use auto
 param.drift.type = 'auto';
-param.drift.gap = 50;
-param.drift.dist = 0.5;
+param.drift.gap = 10;
+param.drift.dist = 1;
 
 % param.drift.type = 'none';
 

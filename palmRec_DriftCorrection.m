@@ -57,7 +57,7 @@ function databuf = palmRec_DriftCorrection(databuf, param)
                 %---------- weight of point ----------
         %         weight = databuf.fitInfo(plist, 3);
         %         weight = sum(weight(:));
-                weight = 1;
+                weight = pcnt^2;
 
                 for n=1:pcnt-1
                     dx = fitInfo(plist(n+1), 1) - fitInfo(plist(n), 1);
