@@ -7,7 +7,7 @@ dresult = zeros(dnum,2);
 imgbuf = cell(dnum);
 for m=1:dnum-1
     m
-    img1 = MakeImg(pos(((m-1)*buglen+1):(m*buglen),:), simg, 32);
+    img1 = MakeImg(pos(((1-1)*buglen+1):(1*buglen),:), simg, 32);
     img2 = MakeImg(pos((m*buglen +1):((m+1)*buglen),:), simg, 32);
     reimg = calCrossCorr(img1, img2, xx,yy);
     B = CalDrift_weightedcentroid(reimg);
@@ -24,4 +24,5 @@ result_i(m,1) = dresult(m,1) + result_i(m-1,1);
 result_i(m,2) = dresult(m,2) + result_i(m-1,2);
 end
 
-plot(result_i)
+figure(2)
+plot(dresult)
