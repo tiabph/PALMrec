@@ -177,7 +177,7 @@ void ReadFrame(TIFF *tif, int imgidx, uint16 *pbuf,
 }
 
 int loadLibTiff(){
-    HINSTANCE hDLL;
+//    HINSTANCE hDLL;
     hDLL=LoadLibrary("libtiff.dll");
     if(hDLL){
 //         mexPrintf("%d\n",
