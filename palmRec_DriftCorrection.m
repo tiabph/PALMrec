@@ -1,6 +1,9 @@
 function databuf = palmRec_DriftCorrection(databuf, param)
     type = param.drift.type;
     B=[];
+    if isfield(param.drift,'postfix')
+        param.drift.file = [param.filename(1:end-4) param.drift.postfix param.filename(end-3:end)];
+    end
     if isempty(param.drift.file)
         databuf.DriftCorrectionFlag = 0;
         return
