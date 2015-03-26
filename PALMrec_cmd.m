@@ -1,4 +1,4 @@
-function [databuf, timeResult] = PALMrec_cmd(inifile, varargin)
+function [databuf, timeResult, param] = PALMrec_cmd(inifile, varargin)
 %% PALM reconstruction script
 %init path
 addpath('.\detection');
