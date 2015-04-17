@@ -9,6 +9,7 @@ addpath('.\cmdline');
 %init parameters
 inifile = '.\cmdline\default.ini';
 param = ReadINI(inifile);
+param = CheckParam(param);
 
 timestamp = tic();
 %% load image data

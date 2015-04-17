@@ -1,4 +1,4 @@
-function [databuf, timeResult, param] = PALMrec_cmd(inifile, varargin)
+function [databuf, timeResult, param] = PALMrec_cmd(inifile, imgfile, varargin)
 %% PALM reconstruction script
 %init path
 addpath('.\detection');
@@ -13,6 +13,10 @@ param = ReadINI(inifile);
 if(nargin>1)
     param = parseArgin(varargin, param);
 end
+if ~isempty(imgfile)
+    param.fullpath = imgfile;
+end
+param = CheckParam(param);
 
 timestamp = tic();
 %% load image data
