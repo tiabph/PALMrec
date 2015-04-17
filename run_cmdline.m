@@ -76,6 +76,8 @@ tic
 databuf = palmRec_Linking_cpu(databuf, param);
 disp(['--linking time: ' num2str(toc)])
 timeResult.linking = toc();
+%filter data
+databuf = palmRec_Filter(databuf, param);
 
 %% reconstruction
 tic
