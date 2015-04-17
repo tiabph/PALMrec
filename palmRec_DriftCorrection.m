@@ -1,18 +1,15 @@
 function databuf = palmRec_DriftCorrection(databuf, param)
     type = param.drift.type;
     B=[];
-    if isfield(param.drift,'postfix')
-        param.drift.file = [param.filename(1:end-4) param.drift.postfix param.filename(end-3:end)];
-    end
-    if isempty(param.drift.file)
-        databuf.DriftCorrectionFlag = 0;
-        return
-    end
+    databuf.DriftCorrectionFlag = 0;
+    
+    
     
     if strcmp(type,'file')
-        path = param.drift.path;
-        file = param.drift.file;
-        I = TIFFloadFrame_16bit_CPU([path file],[1 -1]);
+        if isempty(param.drift.filepath) || ~exist(param.drift.filepath,'file')
+            return
+        end
+        I = TIFFloadFrame_16bit_CPU(param.drift.filepath,[1 -1]);
         %kernel function
 %         B = CalDrift_raw(I);    %raw function with gaussian fitting
 %         B = CalDrift_weightedcentroid(I);  %weighted centroid 
