@@ -45,7 +45,7 @@ end
 %type: 0:comment, 1:kay-value pair, 2:section
 function [rtype key value] = parseLine(line, convflag)
     line = strtrim(line);
-    if(line(1) == ';' || line(1) == '#')
+    if(isempty(strtrim(line)) || line(1) == ';' || line(1) == '#')
         rtype = 0;
         key = [];
         value = [];
