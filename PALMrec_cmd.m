@@ -1,4 +1,4 @@
-function [databuf, timeResult, param] = PALMrec_cmd(inifile, imgfile, varargin)
+function [databuf, timeResult, param] = PALMrec_cmd(imgfile, inifile, varargin)
 %% PALM reconstruction script
 %init path
 addpath('.\detection');
@@ -9,6 +9,12 @@ addpath('.\drift');
 addpath('.\cmdline');
 %init parameters
 % inifile = '.\cmdline\default.ini';
+default_inifile = '.\cmdline\default.ini';
+if(nargin <2)
+    inifile = default_inifile;
+end
+
+
 param = ReadINI(inifile);
 if(nargin>1)
     param = parseArgin(varargin, param);
