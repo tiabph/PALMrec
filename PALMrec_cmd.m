@@ -7,6 +7,7 @@ addpath('.\common');
 addpath('.\util_cpu');
 addpath('.\drift');
 addpath('.\cmdline');
+addpath('.\reconstruction');
 %init parameters
 % inifile = '.\cmdline\default.ini';
 default_inifile = '.\cmdline\default.ini';
