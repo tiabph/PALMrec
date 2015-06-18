@@ -1,5 +1,5 @@
 function databuf = palmRec_Filter(databuf, param)
-    if ~isfield(param, 'filter')
+    if ~isfield(param, 'filter') || (isfield(param.filter, 'on') && param.filter.on==0) 
         return
     end
     maxPositionError = param.filter.max_position_err;
